@@ -96,7 +96,7 @@ static int hostap_enable_hostapd(PSDevice pDevice, int rtnl_locked)
 	pDevice->apdev->irq = dev->irq;
 	pDevice->apdev->mem_start = dev->mem_start;
 	pDevice->apdev->mem_end = dev->mem_end;
-	sprintf(pDevice->apdev->name, "%sap", dev->name);
+	snprintf(pDevice->apdev->name, "%sap", dev->name);
 	if (rtnl_locked)
 		ret = register_netdevice(pDevice->apdev);
 	else

@@ -16,7 +16,7 @@
 	char *tmp;						\
 								\
 	tmp = kmalloc(sizeof(format) + max_alloc, GFP_ATOMIC);	\
-	sprintf(tmp, format, param);				\
+	snprintf(tmp, format, param);				\
 	strcat(str, tmp);					\
 	kfree(tmp);						\
 }
@@ -260,7 +260,7 @@ char *caam_jr_strstatus(char *outstr, u32 status)
 	};
 	u32 ssrc = status >> JRSTA_SSRC_SHIFT;
 
-	sprintf(outstr, "%s: ", status_src[ssrc].error);
+	snprintf(outstr, "%s: ", status_src[ssrc].error);
 
 	if (status_src[ssrc].report_ssed)
 		status_src[ssrc].report_ssed(status, outstr);

@@ -390,7 +390,7 @@ out:
 static ssize_t show_##file_name				\
 (struct cpufreq_policy *policy, char *buf)		\
 {							\
-	return sprintf(buf, "%u\n", policy->object);	\
+	return snprintf(buf, "%u\n", policy->object);	\
 }
 
 show_one(cpuinfo_min_freq, cpuinfo.min_freq);
@@ -438,8 +438,8 @@ static ssize_t show_cpuinfo_cur_freq(struct cpufreq_policy *policy,
 {
 	unsigned int cur_freq = __cpufreq_get(policy->cpu);
 	if (!cur_freq)
-		return sprintf(buf, "<unknown>");
-	return sprintf(buf, "%u\n", cur_freq);
+		return snprintf(buf, "<unknown>");
+	return snprintf(buf, "%u\n", cur_freq);
 }
 
 
@@ -449,9 +449,9 @@ static ssize_t show_cpuinfo_cur_freq(struct cpufreq_policy *policy,
 static ssize_t show_scaling_governor(struct cpufreq_policy *policy, char *buf)
 {
 	if (policy->policy == CPUFREQ_POLICY_POWERSAVE)
-		return sprintf(buf, "powersave\n");
+		return snprintf(buf, "powersave\n");
 	else if (policy->policy == CPUFREQ_POLICY_PERFORMANCE)
-		return sprintf(buf, "performance\n");
+		return snprintf(buf, "performance\n");
 	else if (policy->governor)
 		return scnprintf(buf, CPUFREQ_NAME_PLEN, "%s\n",
 				policy->governor->name);
@@ -512,7 +512,7 @@ static ssize_t show_scaling_available_governors(struct cpufreq_policy *policy,
 	struct cpufreq_governor *t;
 
 	if (!cpufreq_driver->target) {
-		i += sprintf(buf, "performance powersave");
+		i += snprintf(buf, "performance powersave");
 		goto out;
 	}
 
@@ -523,7 +523,7 @@ static ssize_t show_scaling_available_governors(struct cpufreq_policy *policy,
 		i += scnprintf(&buf[i], CPUFREQ_NAME_PLEN, "%s ", t->name);
 	}
 out:
-	i += sprintf(&buf[i], "\n");
+	i += snprintf(&buf[i], "\n");
 	return i;
 }
 
@@ -539,7 +539,7 @@ static ssize_t show_cpus(const struct cpumask *mask, char *buf)
 		if (i >= (PAGE_SIZE - 5))
 			break;
 	}
-	i += sprintf(&buf[i], "\n");
+	i += snprintf(&buf[i], "\n");
 	return i;
 }
 
@@ -581,7 +581,7 @@ static ssize_t store_scaling_setspeed(struct cpufreq_policy *policy,
 static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 {
 	if (!policy->governor || !policy->governor->show_setspeed)
-		return sprintf(buf, "<unsupported>\n");
+		return snprintf(buf, "<unsupported>\n");
 
 	return policy->governor->show_setspeed(policy, buf);
 }
@@ -596,9 +596,9 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 	if (cpufreq_driver->bios_limit) {
 		ret = cpufreq_driver->bios_limit(policy->cpu, &limit);
 		if (!ret)
-			return sprintf(buf, "%u\n", limit);
+			return snprintf(buf, "%u\n", limit);
 	}
-	return sprintf(buf, "%u\n", policy->cpuinfo.max_freq);
+	return snprintf(buf, "%u\n", policy->cpuinfo.max_freq);
 }
 
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);

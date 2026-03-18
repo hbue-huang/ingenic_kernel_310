@@ -258,7 +258,7 @@ static int chsc_async(struct chsc_async_area *chsc_area,
 		CHSC_LOG(2, "schid");
 		CHSC_LOG_HEX(2, &sch->schid, sizeof(sch->schid));
 		cc = chsc(chsc_area);
-		sprintf(dbf, "cc:%d", cc);
+		snprintf(dbf, "cc:%d", cc);
 		CHSC_LOG(2, dbf);
 		switch (cc) {
 		case 0:
@@ -291,7 +291,7 @@ static void chsc_log_command(struct chsc_async_area *chsc_area)
 {
 	char dbf[10];
 
-	sprintf(dbf, "CHSC:%x", chsc_area->header.code);
+	snprintf(dbf, "CHSC:%x", chsc_area->header.code);
 	CHSC_LOG(0, dbf);
 	CHSC_LOG_HEX(0, chsc_area, 32);
 }
@@ -355,7 +355,7 @@ static int chsc_ioctl_start(void __user *user_area)
 		if (copy_to_user(user_area, chsc_area, PAGE_SIZE))
 			ret = -EFAULT;
 out_free:
-	sprintf(dbf, "ret:%d", ret);
+	snprintf(dbf, "ret:%d", ret);
 	CHSC_LOG(0, dbf);
 	kfree(request);
 	free_page((unsigned long)chsc_area);

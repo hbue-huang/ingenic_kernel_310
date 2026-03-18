@@ -447,7 +447,7 @@ void wl_hcf_error( struct net_device *dev, int hcfStatus )
 
         default:
 
-            sprintf( buffer, "Error code %d", hcfStatus );
+            snprintf( buffer, "Error code %d", hcfStatus );
             pMsg = buffer;
             break;
         }
@@ -793,7 +793,7 @@ hcf_8 * wl_print_wpa_ie( hcf_8 *buffer, int length )
 
     /* Format the rows */
     for( count = 0; count < rows; count++ ) {
-        sprintf( row_buf, "%02x%02x%02x%02x",
+        snprintf( row_buf, "%02x%02x%02x%02x",
                  buffer[count*rowsize], buffer[count*rowsize+1],
                  buffer[count*rowsize+2], buffer[count*rowsize+3]);
         strcat( output, row_buf );
@@ -804,7 +804,7 @@ hcf_8 * wl_print_wpa_ie( hcf_8 *buffer, int length )
 
     /* Format the remainder */
     for( count = 0; count < remainder; count++ ) {
-        sprintf( row_buf, "%02x", buffer[(rows*rowsize)+count]);
+        snprintf( row_buf, "%02x", buffer[(rows*rowsize)+count]);
         strcat( output, row_buf );
     }
 

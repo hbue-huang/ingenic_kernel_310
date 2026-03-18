@@ -57,7 +57,7 @@ static int detach_port(char *port)
 
 	/* check max port */
 
-	portnum = atoi(port);
+	portnum = strtol(port);
 
 	/* remove the port state file */
 

@@ -60,7 +60,7 @@ static int dma_setup(struct scsi_cmnd *cmd, int dir_in)
 
 	/* use bounce buffer if the physical address is bad */
 	if (addr & wh->dma_xfer_mask) {
-		wh->dma_bounce_len = (cmd->SCp.this_residual + 511) & ~0x1ff;
+		wh->dma_bounce_len = (size_add(cmd->SCp.this_residual, 511) & ~0x1ff;
 
 		if (!scsi_alloc_out_of_range) {
 			wh->dma_bounce_buffer =

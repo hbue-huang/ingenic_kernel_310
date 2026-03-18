@@ -447,7 +447,7 @@ static ssize_t ft_wwn_show_attr_version(
 	struct target_fabric_configfs *tf,
 	char *page)
 {
-	return sprintf(page, "TCM FC " FT_VERSION " on %s/%s on "
+	return snprintf(page, "TCM FC " FT_VERSION " on %s/%s on "
 		""UTS_RELEASE"\n",  utsname()->sysname, utsname()->machine);
 }
 

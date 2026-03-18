@@ -223,7 +223,7 @@ int stmmac_mdio_register(struct net_device *ndev)
 				irq_str = "IGNORE";
 				break;
 			default:
-				sprintf(irq_num, "%d", phydev->irq);
+				snprintf(irq_num, "%d", phydev->irq);
 				irq_str = irq_num;
 				break;
 			}

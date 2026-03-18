@@ -131,7 +131,7 @@ SHOW(__bch_cached_dev)
 		bch_hprint(derivative,	dc->writeback_rate_derivative << 9);
 		bch_hprint(target,	dc->writeback_rate_target << 9);
 
-		return sprintf(buf,
+		return snprintf(buf,
 			       "rate:\t\t%u\n"
 			       "change:\t\t%i\n"
 			       "dirty:\t\t%s\n"

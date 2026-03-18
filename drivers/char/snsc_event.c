@@ -94,7 +94,7 @@ scdrv_parse_event(char *event, int *src, int *code, int *esp_code, char *desc)
 	}
 	event[CHUNKSIZE-1] = '\0';	/* ensure this string ends! */
 	event += 2; 			/* skip leading CR/LF */
-	desc_end = desc + sprintf(desc, "%s", event);
+	desc_end = desc + snprintf(desc, "%s", event);
 
 	/* strip trailing CR/LF (if any) */
 	for (desc_end--;

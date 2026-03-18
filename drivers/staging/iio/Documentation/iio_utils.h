@@ -109,17 +109,17 @@ inline int iioutils_get_type(unsigned *is_signed,
 	unsigned padint;
 	const struct dirent *ent;
 
-	ret = asprintf(&scan_el_dir, FORMAT_SCAN_ELEMENTS_DIR, device_dir);
+	ret = asnprintf(&scan_el_dir, FORMAT_SCAN_ELEMENTS_DIR, device_dir);
 	if (ret < 0) {
 		ret = -ENOMEM;
 		goto error_ret;
 	}
-	ret = asprintf(&builtname, FORMAT_TYPE_FILE, name);
+	ret = asnprintf(&builtname, FORMAT_TYPE_FILE, name);
 	if (ret < 0) {
 		ret = -ENOMEM;
 		goto error_free_scan_el_dir;
 	}
-	ret = asprintf(&builtname_generic, FORMAT_TYPE_FILE, generic_name);
+	ret = asnprintf(&builtname_generic, FORMAT_TYPE_FILE, generic_name);
 	if (ret < 0) {
 		ret = -ENOMEM;
 		goto error_free_builtname;
@@ -137,7 +137,7 @@ inline int iioutils_get_type(unsigned *is_signed,
 		 */
 		if ((strcmp(builtname, ent->d_name) == 0) ||
 		    (strcmp(builtname_generic, ent->d_name) == 0)) {
-			ret = asprintf(&filename,
+			ret = asnprintf(&filename,
 				       "%s/%s", scan_el_dir, ent->d_name);
 			if (ret < 0) {
 				ret = -ENOMEM;
@@ -208,12 +208,12 @@ inline int iioutils_get_param_float(float *output,
 	char *filename = NULL;
 	const struct dirent *ent;
 
-	ret = asprintf(&builtname, "%s_%s", name, param_name);
+	ret = asnprintf(&builtname, "%s_%s", name, param_name);
 	if (ret < 0) {
 		ret = -ENOMEM;
 		goto error_ret;
 	}
-	ret = asprintf(&builtname_generic,
+	ret = asnprintf(&builtname_generic,
 		       "%s_%s", generic_name, param_name);
 	if (ret < 0) {
 		ret = -ENOMEM;
@@ -227,7 +227,7 @@ inline int iioutils_get_param_float(float *output,
 	while (ent = readdir(dp), ent != NULL)
 		if ((strcmp(builtname, ent->d_name) == 0) ||
 		    (strcmp(builtname_generic, ent->d_name) == 0)) {
-			ret = asprintf(&filename,
+			ret = asnprintf(&filename,
 				       "%s/%s", device_dir, ent->d_name);
 			if (ret < 0) {
 				ret = -ENOMEM;
@@ -294,7 +294,7 @@ inline int build_channel_array(const char *device_dir,
 	char *filename;
 
 	*counter = 0;
-	ret = asprintf(&scan_el_dir, FORMAT_SCAN_ELEMENTS_DIR, device_dir);
+	ret = asnprintf(&scan_el_dir, FORMAT_SCAN_ELEMENTS_DIR, device_dir);
 	if (ret < 0) {
 		ret = -ENOMEM;
 		goto error_ret;
@@ -307,7 +307,7 @@ inline int build_channel_array(const char *device_dir,
 	while (ent = readdir(dp), ent != NULL)
 		if (strcmp(ent->d_name + strlen(ent->d_name) - strlen("_en"),
 			   "_en") == 0) {
-			ret = asprintf(&filename,
+			ret = asnprintf(&filename,
 				       "%s/%s", scan_el_dir, ent->d_name);
 			if (ret < 0) {
 				ret = -ENOMEM;
@@ -336,7 +336,7 @@ inline int build_channel_array(const char *device_dir,
 		if (strcmp(ent->d_name + strlen(ent->d_name) - strlen("_en"),
 			   "_en") == 0) {
 			current = &(*ci_array)[count++];
-			ret = asprintf(&filename,
+			ret = asnprintf(&filename,
 				       "%s/%s", scan_el_dir, ent->d_name);
 			if (ret < 0) {
 				ret = -ENOMEM;
@@ -376,7 +376,7 @@ inline int build_channel_array(const char *device_dir,
 				free(filename);
 				goto error_cleanup_array;
 			}
-			ret = asprintf(&filename,
+			ret = asnprintf(&filename,
 				       "%s/%s_index",
 				       scan_el_dir,
 				       current->name);
@@ -477,7 +477,7 @@ inline int find_type_by_name(const char *name, const char *type)
 					closedir(dp);
 					return -ENOMEM;
 				}
-				sprintf(filename, "%s%s%d/name",
+				snprintf(filename, "%s%s%d/name",
 					iio_dir,
 					type,
 					number);
@@ -508,7 +508,7 @@ inline int _write_sysfs_int(char *filename, char *basedir, int val, int verify)
 	char *temp = malloc(strlen(basedir) + strlen(filename) + 2);
 	if (temp == NULL)
 		return -ENOMEM;
-	sprintf(temp, "%s/%s", basedir, filename);
+	snprintf(temp, "%s/%s", basedir, filename);
 	sysfsfp = fopen(temp, "w");
 	if (sysfsfp == NULL) {
 		printf("failed to open %s\n", temp);
@@ -558,7 +558,7 @@ int _write_sysfs_string(char *filename, char *basedir, char *val, int verify)
 		printf("Memory allocation failed\n");
 		return -ENOMEM;
 	}
-	sprintf(temp, "%s/%s", basedir, filename);
+	snprintf(temp, "%s/%s", basedir, filename);
 	sysfsfp = fopen(temp, "w");
 	if (sysfsfp == NULL) {
 		printf("Could not open %s\n", temp);
@@ -618,7 +618,7 @@ int read_sysfs_posint(char *filename, char *basedir)
 		printf("Memory allocation failed");
 		return -ENOMEM;
 	}
-	sprintf(temp, "%s/%s", basedir, filename);
+	snprintf(temp, "%s/%s", basedir, filename);
 	sysfsfp = fopen(temp, "r");
 	if (sysfsfp == NULL) {
 		ret = -errno;
@@ -640,7 +640,7 @@ int read_sysfs_float(char *filename, char *basedir, float *val)
 		printf("Memory allocation failed");
 		return -ENOMEM;
 	}
-	sprintf(temp, "%s/%s", basedir, filename);
+	snprintf(temp, "%s/%s", basedir, filename);
 	sysfsfp = fopen(temp, "r");
 	if (sysfsfp == NULL) {
 		ret = -errno;

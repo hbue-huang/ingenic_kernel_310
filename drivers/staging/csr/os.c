@@ -177,7 +177,7 @@ char* print_time(void )
 
     t = cpu_clock(printk_cpu);
     nanosec_rem = do_div(t, 1000000000);
-    sprintf(tbuf, "[%5lu.%06lu] ",
+    snprintf(tbuf, "[%5lu.%06lu] ",
                     (unsigned long) t,
                     nanosec_rem / 1000);
 
