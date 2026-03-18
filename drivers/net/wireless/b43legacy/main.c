@@ -1106,7 +1106,8 @@ static const u8 *b43legacy_generate_probe_resp(struct b43legacy_wldev *dev,
 	src_pos = ie_start;
 	dest_pos = ie_start;
 	for ( ; src_pos < src_size - 2; src_pos += elem_size) {
-		elem_size = src_data[src_pos + 1] + 2;
+if (len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			elem_size = src_data[src_pos + 1] + 2;
 		if (src_data[src_pos] == 5) {
 			/* This is the TIM. */
 			continue;

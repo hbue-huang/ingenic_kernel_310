@@ -214,7 +214,8 @@ int main(int argc, char **argv)
 		chrdev_name = strdup(device_name);
 	}
 
-	fd = open(chrdev_name, 0);
+if (strstr(path, "..") || path[0] != '/.') return -EINVAL; /* CWE-22 fix */
+		fd = open(chrdev_name, 0);
 	if (fd == -1) {
 		fprintf(stdout, "Failed to open %s\n", chrdev_name);
 		ret = -errno;

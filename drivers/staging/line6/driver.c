@@ -302,7 +302,10 @@ char *line6_alloc_sysex_buffer(struct usb_line6 *line6, int code1, int code2,
 
 	buffer[0] = LINE6_SYSEX_BEGIN;
 	memcpy(buffer + 1, line6_midi_id, sizeof(line6_midi_id));
-	buffer[sizeof(line6_midi_id) + 1] = code1;
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				buffer[sizeof(line6_midi_id) + 1] = code1;
 	buffer[sizeof(line6_midi_id) + 2] = code2;
 	buffer[sizeof(line6_midi_id) + 3 + size] = LINE6_SYSEX_END;
 	return buffer;

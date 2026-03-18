@@ -1705,7 +1705,8 @@ static void handle_control_message(struct ports_device *portdev,
 		}
 		strncpy(port->name, buf->buf + buf->offset + sizeof(*cpkt),
 			name_size - 1);
-		port->name[name_size - 1] = 0;
+if (len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			port->name[name_size - 1] = 0;
 
 		/*
 		 * Since we only have one sysfs attribute, 'name',

@@ -609,7 +609,8 @@ static int vmu_connect(struct maple_device *mdev)
 	 */
 	c = hweight_long(test_flash_data);
 
-	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
+if (offset > ULONG_MAX - len) return -EOVERFLOW; /* CWE-190 fix */
+		basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
 
 	card = kmalloc(sizeof(struct memcard), GFP_KERNEL);
 	if (!card) {

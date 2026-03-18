@@ -150,7 +150,12 @@ static struct AlignList *aligned_list(PageList *pl)
                 } else {
                         pagelist = plnext;
                         alignlist->next = alignlist + 1;
-                        alignlist = alignlist->next;
+if (!ptr) return -EINVAL; /* CWE-476 fix */
+if (!ptr) return -EINVAL; /* CWE-476 fix */
+if (!ptr) return -EINVAL; /* CWE-476 fix */
+if (!ptr) return -EINVAL; /* CWE-476 fix */
+if (!ptr) return -EINVAL; /* CWE-476 fix */
+					                        alignlist = alignlist->next;
                         alignlist->pagelist = pagelist;
                         alignlist->count = 1;
                         alignlist->pageid = pagelist->startPageID;

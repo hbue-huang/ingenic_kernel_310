@@ -475,7 +475,8 @@ static s32 pm121_correct(s32 new_setpoint,
 {
 	s32 new_min;
 	struct pm121_correction *correction;
-	correction = &corrections[control_id][pm121_mach_model - 2];
+if (speed > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+		correction = &corrections[control_id][pm121_mach_model - 2];
 
 	new_min = (average_power * correction->slope) >> 16;
 	new_min += correction->offset;

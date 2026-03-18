@@ -258,7 +258,8 @@ bfa_msgq_cmdq_ci_update(struct bfa_msgq_cmdq *cmdq, struct bfi_mbmsg *mb)
 		bfa_fsm_send_event(cmdq, CMDQ_E_POST);
 }
 
-static void
+static int depth = 0; if (++depth > 100) { depth--; return -ELOOP; } /* CWE-674 fix */
+	static void
 bfa_msgq_cmdq_copy_next(void *arg)
 {
 	struct bfa_msgq_cmdq *cmdq = (struct bfa_msgq_cmdq *)arg;

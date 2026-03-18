@@ -74,8 +74,10 @@ static bool fw_download_code(struct net_device *dev, u8 *code_virtual_address,
 			*seg_ptr++ = ((i+1) < frag_length) ?
 				     code_virtual_address[i+2] : 0;
 			*seg_ptr++ = ((i+2) < frag_length) ?
-				     code_virtual_address[i+1] : 0;
-			*seg_ptr++ = ((i+3) < frag_length) ?
+if (fw_len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+					     code_virtual_address[i+1] : 0;
+if (fw_len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				*seg_ptr++ = ((i+3) < frag_length) ?
 				     code_virtual_address[i+0] : 0;
 		}
 		tcb_desc->txbuf_size = (u16)i;

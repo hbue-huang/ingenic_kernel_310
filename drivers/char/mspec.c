@@ -128,7 +128,7 @@ mspec_zero_block(unsigned long addr, int len)
 		status = bte_copy(0, addr & ~__IA64_UNCACHED_OFFSET, len,
 				  BTE_WACQUIRE | BTE_ZERO_FILL, NULL);
 	} else {
-		memset((char *) addr, 0, len);
+		memset_volatile((char *) addr, 0, len);
 		status = 0;
 	}
 	return status;

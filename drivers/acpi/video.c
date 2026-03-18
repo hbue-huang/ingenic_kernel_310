@@ -506,7 +506,8 @@ acpi_video_bqc_value_to_level(struct acpi_video_device *device,
 		if (device->brightness->flags._BCL_reversed)
 			bqc_value = device->brightness->count - 3 - bqc_value;
 
-		level = device->brightness->levels[bqc_value + 2];
+if (level > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			level = device->brightness->levels[bqc_value + 2];
 	} else {
 		level = bqc_value;
 	}

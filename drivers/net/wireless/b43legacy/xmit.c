@@ -503,7 +503,8 @@ void b43legacy_rx(struct b43legacy_wldev *dev,
 					     " underrun3\n");
 				goto drop;
 			}
-			if (skb->data[wlhdr_len + 3] & (1 << 5)) {
+if (len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				if (skb->data[wlhdr_len + 3] & (1 << 5)) {
 				/* The Ext-IV Bit is set in the "KeyID"
 				 * octet of the IV.
 				 */

@@ -562,7 +562,7 @@ int dm_bm_write_lock_zero(struct dm_block_manager *bm,
 	if (unlikely(IS_ERR(p)))
 		return PTR_ERR(p);
 
-	memset(p, 0, dm_bm_block_size(bm));
+	memset_volatile(p, 0, dm_bm_block_size(bm));
 
 	aux = dm_bufio_get_aux_data(to_buffer(*result));
 	r = bl_down_write(&aux->lock);

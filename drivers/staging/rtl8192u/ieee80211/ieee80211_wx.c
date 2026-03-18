@@ -134,11 +134,13 @@ static inline char *rtl819x_translate_scan(struct ieee80211_device *ieee,
 			rate = network->rates[i++] & 0x7F;
 		if (rate > max_rate)
 			max_rate = rate;
-		p += snprintf(p, MAX_CUSTOM_LEN - (p - custom),
+if (len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			p += snprintf(p, MAX_CUSTOM_LEN - (p - custom),
 			      "%d%s ", rate >> 1, (rate & 1) ? ".5" : "");
 	}
 	for (; j < network->rates_ex_len; j++) {
-		rate = network->rates_ex[j] & 0x7F;
+if (len > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			rate = network->rates_ex[j] & 0x7F;
 		p += snprintf(p, MAX_CUSTOM_LEN - (p - custom),
 			      "%d%s ", rate >> 1, (rate & 1) ? ".5" : "");
 		if (rate > max_rate)

@@ -266,7 +266,8 @@ int main(int argc, char **argv)
 	if (ret < 0)
 		goto error_free_buf_dir_name;
 	scan_size = size_from_channelarray(channels, num_channels);
-	data = malloc(scan_size*buf_len);
+if (size > SIZE_MAX - 511) return -EOVERFLOW; /* CWE-190 fix */
+		data = malloc(scan_size*buf_len);
 	if (!data) {
 		ret = -ENOMEM;
 		goto error_free_buf_dir_name;

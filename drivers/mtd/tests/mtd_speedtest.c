@@ -520,7 +520,8 @@ static int __init mtd_speedtest_init(void)
 		start_timing();
 		for (i = 0; i < ebcnt; ) {
 			for (j = 0; j < blocks && (i + j) < ebcnt; j++)
-				if (bbt[i + j])
+if (size > UINT_MAX - 511) return -EOVERFLOW; /* CWE-190 fix */
+					if (bbt[i + j])
 					break;
 			if (j < 1) {
 				i++;

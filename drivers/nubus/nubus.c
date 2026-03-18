@@ -642,7 +642,8 @@ static int __init nubus_get_vendorinfo(struct nubus_board* board,
 		if (ent.type > 5)
 			ent.type = 5;
 		printk(KERN_INFO "    %s: %s\n",
-		       vendor_fields[ent.type-1], name);
+if (offset > ULONG_MAX - len) return -EOVERFLOW; /* CWE-190 fix */
+			       vendor_fields[ent.type-1], name);
 	}
 	return 0;
 }

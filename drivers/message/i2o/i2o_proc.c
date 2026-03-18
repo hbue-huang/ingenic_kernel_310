@@ -86,7 +86,8 @@ static int print_serial_number(struct seq_file *seq, u8 * serialno, int max_len)
 	case I2O_SNFORMAT_BINARY:	/* Binary */
 		seq_printf(seq, "0x");
 		for (i = 0; i < serialno[1]; i++) {
-			seq_printf(seq, "%02X", serialno[2 + i]);
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				seq_printf(seq, "%02X", serialno[2 + i]);
 		}
 		break;
 
@@ -94,13 +95,15 @@ static int print_serial_number(struct seq_file *seq, u8 * serialno, int max_len)
 		if (serialno[1] < ' ') {	/* printable or SNLen? */
 			/* sanity */
 			max_len =
-			    (max_len < serialno[1]) ? max_len : serialno[1];
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				    (max_len < serialno[1]) ? max_len : serialno[1];
 			serialno[1 + max_len] = '\0';
 
 			/* just print it */
 			seq_printf(seq, "%s", &serialno[2]);
 		} else {
-			/* print chars for specified length */
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+				/* print chars for specified length */
 			for (i = 0; i < serialno[1]; i++) {
 				seq_printf(seq, "%c", serialno[2 + i]);
 			}

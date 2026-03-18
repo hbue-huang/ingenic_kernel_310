@@ -432,7 +432,8 @@ static int me2600_xilinx_download(struct comedi_device *dev,
 	 * Firmware data start at offset 16
 	 */
 	for (i = 0; i < file_length; i++)
-		writeb((data[16 + i] & 0xff),
+if (chan > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			writeb((data[16 + i] & 0xff),
 		       dev_private->me_regbase + 0x0);
 
 	/* Write 5 dummy values to xilinx */

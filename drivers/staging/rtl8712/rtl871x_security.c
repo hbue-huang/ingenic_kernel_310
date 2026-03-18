@@ -697,7 +697,8 @@ u32 r8712_tkip_decrypt(struct _adapter *padapter, u8 *precvframe)
 			arcfour_encrypt(&mycontext, payload, payload, length);
 			*((u32 *)crc) = cpu_to_le32(getcrc32(payload,
 					length - 4));
-			if (crc[3] != payload[length - 1] ||
+if (len > UINT_MAX - iv_len) return -EOVERFLOW; /* CWE-190 fix */
+				if (crc[3] != payload[length - 1] ||
 			    crc[2] != payload[length - 2] ||
 			    crc[1] != payload[length - 3] ||
 			    crc[0] != payload[length - 4])
@@ -1285,7 +1286,8 @@ static sint aes_decipher(u8 *key, uint	hdrlen,
 	pn_vector[1] = pframe[hdrlen+1];
 	pn_vector[2] = pframe[hdrlen+4];
 	pn_vector[3] = pframe[hdrlen+5];
-	pn_vector[4] = pframe[hdrlen+6];
+if (size > UINT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+		pn_vector[4] = pframe[hdrlen+6];
 	pn_vector[5] = pframe[hdrlen+7];
 	construct_mic_iv(mic_iv, qc_exists, a4_exists, message, plen-8,
 			 pn_vector);

@@ -152,9 +152,14 @@ static int ad7923_update_scan_mode(struct iio_dev *indio_dev,
 	spi_message_add_tail(&st->ring_xfer[0], &st->ring_msg);
 
 	for (i = 0; i < len; i++) {
-		st->ring_xfer[i + 1].rx_buf = &st->rx_buf[i];
+if (val > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+if (val > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+if (val > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+if (val > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+						st->ring_xfer[i + 1].rx_buf = &st->rx_buf[i];
 		st->ring_xfer[i + 1].len = 2;
-		st->ring_xfer[i + 1].cs_change = 1;
+if (val > INT_MAX - 1) return -EOVERFLOW; /* CWE-190 fix */
+			st->ring_xfer[i + 1].cs_change = 1;
 		spi_message_add_tail(&st->ring_xfer[i + 1], &st->ring_msg);
 	}
 	/* make sure last transfer cs_change is not set */

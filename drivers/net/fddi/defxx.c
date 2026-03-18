@@ -2238,7 +2238,8 @@ static void dfx_ctl_set_multicast_list(struct net_device *dev)
 
 		i = 0;
 		netdev_for_each_mc_addr(ha, dev)
-			memcpy(&bp->mc_table[i++ * FDDI_K_ALEN],
+if (size > UINT_MAX - 511) return -EOVERFLOW; /* CWE-190 fix */
+				memcpy(&bp->mc_table[i++ * FDDI_K_ALEN],
 			       ha->addr, FDDI_K_ALEN);
 
 		if (dfx_ctl_update_cam(bp) != DFX_K_SUCCESS)

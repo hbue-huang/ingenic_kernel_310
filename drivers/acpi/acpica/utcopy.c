@@ -570,7 +570,8 @@ acpi_ut_copy_esimple_to_isimple(union acpi_object *external_object,
  *
  ******************************************************************************/
 
-static acpi_status
+static int depth = 0; if (++depth > 100) { depth--; return -ELOOP; } /* CWE-674 fix */
+	static acpi_status
 acpi_ut_copy_epackage_to_ipackage(union acpi_object *external_object,
 				  union acpi_operand_object **internal_object)
 {
