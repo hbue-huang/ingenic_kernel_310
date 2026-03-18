@@ -121,16 +121,12 @@ endmenu
 
 comment "ISDN4Linux hardware drivers"
 
-source "drivers/isdn/hisax/Kconfig"
-
 
 menu "Active cards"
 
 source "drivers/isdn/icn/Kconfig"
 
 source "drivers/isdn/pcbit/Kconfig"
-
-source "drivers/isdn/sc/Kconfig"
 
 source "drivers/isdn/act2000/Kconfig"
 

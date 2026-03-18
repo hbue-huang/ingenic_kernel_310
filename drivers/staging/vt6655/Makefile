@@ -31,7 +31,6 @@ vt6655_stage-y +=	device_main.o \
 	rf.o \
 	iwctl.o \
 	wpactl.o \
-	wpa2.o \
 	aes_ccmp.o \
 	vntwifi.o \
 	IEEE11h.o

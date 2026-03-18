@@ -36,7 +36,7 @@ source "drivers/firewire/Kconfig"
 
 source "drivers/message/i2o/Kconfig"
 
-source "drivers/macintosh/Kconfig"
+#source "drivers/macintosh/Kconfig"
 
 source "drivers/net/Kconfig"
 

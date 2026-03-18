@@ -1,4 +1,4 @@
-agpgart-y := backend.o frontend.o generic.o isoch.o
+agpgart-y := backend.o frontend.o generic.o 
 
 agpgart-$(CONFIG_COMPAT)	+= compat_ioctl.o
 
